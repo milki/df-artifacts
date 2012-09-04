@@ -3,8 +3,11 @@ Step-by-step Guide to breach a multi-level aquifer
 
 http://dwarffortresswiki.org/index.php/Aquifer
 
-QuantumMenace's (fast) double-slit method
+QuantumMenace's (fast) double-slit method:
 http://www.bay12forums.com/smf/index.php?topic=79224.15 (see spoiler)
+
+Also illustrated here:
+http://dwarffortresswiki.org/index.php/DF2012:Double-slit_method
 
 
 multi-level aquifer
@@ -27,42 +30,65 @@ O ╘ ═ ╛ ╘ ╦ ╗ ╖ ╓ ╖ ╩ ╗ ╜ ╙ ╜ ╙ ╙ ╒ ╕
 ▲   up ramp (actual ramp)
 
 
+Requirements:
+screw pump materials: 1 block, 1 enourmous corkscrew, 1 pipe section
+1 pump operator
+material for walls - wood/stone/metal
+1+ carpenter/mason/metalcrafter depending on wall material
+1 miner
+
+This will take at least a single season to complete.
+
 
 z0 (non-aquifer)    z-1 (aquifer)   z-2 (aquifer)   z-3 (non-aquifer)
 
-Dig a 2x2 up/stair staircase until the aquifer is hit
+# Aquifer Probing
+
+Dig a 2x2 (or 4x2) up/stair staircase until the aquifer is hit
 
 
-     ████          
+     ████
      █XX█               ██
      █XX█               ██
-     ████          
+     ████
 
+                These tiles are wet.
 
 Dig down-stairs of to the side and floor off one side of the stairs
 for where the pump will go.
 
 
-    ██████             
-    █>++>█             ████ 
-    █>XX>█             ████   
-    ██████             
+    ██████
+    █>++>█             ████
+    █>XX>█             ████
+    ██████
+
+    Stairs+Floor
 
 
-Designate up/down staircases into the aquifer. As they are dug, pause
-and do step time and check the revealed tile for dampness before the
-aquifer water drops. If the tile is damp, then there is another
-aquifer layer beneath. Otherwise, skip foward to steps...
-
+Designate up/down staircases into the aquifer. Check for the next
+aquifer layer as they are dug-+q pause and do one-step time and check
+the revealed tile for dampness before the aquifer water drops. If the
+tile is damp, then there is another aquifer layer beneath. Otherwise,
+skip foward to steps for the Last Aquifer Layer.
 
     ██████            ██████
     █>++>█            █X██X█          █  █
     █>XX>█            █X██X█          █  █
     ██████            ██████
 
+                      Stairs    Check these tiles as they are revealed
+
+
+
+# Multi-level Aquifer
+
+There are at least two aquifer levels below. The second aquifer level
+will act as a drain for the first level.
+
 
 Construct a pump.
-   
+
 
     ██████            ██████
     █>÷÷>█            █X██X█          █  █
@@ -78,13 +104,16 @@ Channel out the input tile of the pump and man the pump.
     █>XX>█            █X██X█          █  █
     ██████            ██████
 
+Pumping from the East
+
 
 Since we know there's an aquifer below, we can continue digging out
-staircase underneath. This makes the aquifer wall drop another
+staircase underneath. This makes the aquifer water drop another
 z-level, making the first one perfectly dry. Again, as they are dug,
-pause and do step time and check the revealed tile for dampness before
-the aquifer water drops. If the tile is damp, then there is another
-aquifer layer beneath. Otherwise, skip foward to steps...
+pause and do one-step time and check the revealed tile for dampness
+before the aquifer water drops. If the tile is damp, then there is
+another aquifer layer beneath. When this layer is done, repeat these
+steps.
 
 
     ██████            ██████            ███
@@ -92,6 +121,8 @@ aquifer layer beneath. Otherwise, skip foward to steps...
     █>XX>█            █X██X█          █ █X█            █
     ██████            ██████            ███
 
+                                      Stairs    Check these tiles as
+                                                they are revealed
 
 Now that we dug out the second layer of the aquifer, we can begin
 plugging the first one (this should be relatively cancellation free).
@@ -104,162 +135,216 @@ The pump can be reversed in the meantime.
 
 
                          ███
-    ██████            ████O█            ███   
+    ██████            ████ █            ███
+    █>++·█            █X██X█          █ █X█            █
+    █>XX>█            █X██X█          █ █X█            █
+    ██████            ████ █            ███
+                         ███
+
+                         Dig
+
+                         ███
+    ██████            ████O█            ███
     █>++·█            █X██X█          █ █X█            █
     █>XX>█            █X██X█          █ █X█            █
     ██████            ████O█            ███
                          ███
 
+                         Wall
+
                          ███
-    ██████            ████O██           ███   
+    ██████            ████O██           ███
     █>++·█            █X██X █         █ █X█            █
     █>XX>█            █X██X██         █ █X█            █
     ██████            ████O█            ███
                          ███
 
+                         Dig
+
                          ███
-    ██████            ████O██           ███   
+    ██████            ████O██           ███
     █>++·█            █X██XO█         █ █X█            █
     █>XX>█            █X██X██         █ █X█            █
     ██████            ████O█            ███
                          ███
 
+                         Wall
+
                          ███
-    ██████            ████O██           ███   
+    ██████            ████O██           ███
     █>++·█            █X██XO█         █ █X█            █
     █>XX>█            █X██X █         █ █X█            █
     ██████            ████O██           ███
                          ███
 
+                         Dig
+
                          ███
-    ██████            ████O██           ███   
+    ██████            ████O██           ███
     █>++·█            █X██X╓█         █ █X█            █
     █>XX>█            █X██X╙█         █ █X█            █
     ██████            ████O██           ███
                          ███
 
+                         Wall
+
 Construct the pump again (if not already), channel the input tile, and
 do the other side.
 
                          ███
-    ██████            ████O██        ██████   
+    ██████            ████O██        ██████
     █·÷÷·█            █X██X╓█        █X██X█         █  █
     █>XX>█            █X██X╙█        █X██X█         █  █
     ██████            ████O██        ██████
                          ███
 
-                      ██████
-    ██████            █ ██O██        ██████   
-    █·++·█            █X██X╓█        █X██X█         █  █
-    █>XX>█            █X██X╙█        █X██X█         █  █
-    ██████            █ ██O██        ██████   
-                      ██████
+Pumping from the West
 
                       ██████
-    ██████            █O██O██        ██████   
+    ██████            █ ██O██        ██████
     █·++·█            █X██X╓█        █X██X█         █  █
     █>XX>█            █X██X╙█        █X██X█         █  █
-    ██████            █O██O██        ██████   
+    ██████            █ ██O██        ██████
                       ██████
 
+                      Dig
+
                       ██████
-    ██████           ██O██O██        ██████   
+    ██████            █O██O██        ██████
+    █·++·█            █X██X╓█        █X██X█         █  █
+    █>XX>█            █X██X╙█        █X██X█         █  █
+    ██████            █O██O██        ██████
+                      ██████
+
+                      Wall
+
+                      ██████
+    ██████           ██O██O██        ██████
     █·++·█           █ X██X╓█        █X██X█         █  █
     █>XX>█           ██X██X╙█        █X██X█         █  █
-    ██████            █O██O██        ██████   
+    ██████            █O██O██        ██████
                       ██████
 
+                      Dig
+
                       ██████
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
     █·++·█           █OX██X╓█        █X██X█         █  █
     █>XX>█           ██X██X╙█        █X██X█         █  █
-    ██████            █O██O██        ██████   
+    ██████            █O██O██        ██████
                       ██████
 
+                      Wall
+
                       ██████
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
     █·++·█           █OX██X╓█        █X██X█         █  █
     █>XX>█           █ X██X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
 
+                      Dig
+
                       ██████
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
     █·++·█           █╖X██X╓█        █X██X█         █  █
     █>XX>█           █╜X██X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
+
+                      Wall
 
 Now the sides are protected. Now dig out the rest of the floor. (There
 will be many more cancellations on this floor).
 
                       ██████
-    ██████           ██O█ O██        ██████   
+    ██████           ██O█ O██        ██████
     █·++·█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
 
-                      ██████
-    ██████           ██O█╘╛██        ██████   
-    █·++·█           █╖X  X╓█        █X██X█         █  █
-    █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
-                      ██████
+                      Dig
 
                       ██████
-    ██████           ██O ╘╛██        ██████   
+    ██████           ██O█╘╛██        ██████
     █·++·█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
 
-                      ██████
-    ██████           ██╘══╛██        ██████   
-    █·++·█           █╖X  X╓█        █X██X█         █  █
-    █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O██O██        ██████   
-                      ██████
+                      Wall
 
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██O ╘╛██        ██████
     █·++·█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O█ O██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
 
-                      ██████
-    ██████           ██╘══╛██        ██████   
-    █·++·█           █╖X  X╓█        █X██X█         █  █
-    █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O█╒╕██        ██████   
-                      ██████
+                      Dig
 
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █·++·█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██O ╒╕██        ██████   
+    ██████           ██O██O██        ██████
                       ██████
 
+                      Wall
+
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █·++·█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██O█ O██        ██████
                       ██████
+
+                      Dig
+
+                      ██████
+    ██████           ██╘══╛██        ██████
+    █·++·█           █╖X  X╓█        █X██X█         █  █
+    █>XX>█           █╜X  X╙█        █X██X█         █  █
+    ██████           ██O█╒╕██        ██████
+                      ██████
+
+                      Wall
+
+                      ██████
+    ██████           ██╘══╛██        ██████
+    █·++·█           █╖X  X╓█        █X██X█         █  █
+    █>XX>█           █╜X  X╙█        █X██X█         █  █
+    ██████           ██O ╒╕██        ██████
+                      ██████
+
+                      Dig
+
+                      ██████
+    ██████           ██╘══╛██        ██████
+    █·++·█           █╖X  X╓█        █X██X█         █  █
+    █>XX>█           █╜X  X╙█        █X██X█         █  █
+    ██████           ██╒══╕██        ██████
+                      ██████
+
+                      Wall
 
 Lastly, rebuild all the stairs.
 
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █>XX>█           █╖X  X╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
+
+    Stairs
 
 If the next two layers aquifers, repeat the above steps. Otherwise,
 continue onto the last steps dealing with the last aquifer layer.
+
+
+# Last Aquifer layer
 
 Rather than doing halves, the operations will be done in quadrants.
 These walls will have lots of cancellations.
@@ -268,157 +353,198 @@ These walls will have lots of cancellations.
 Construct a pump, channel the input tile, and man it.
 
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █>XX>█           █╖X÷÷·╓█        █X██X█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
+
+                Pumping from East
+                + Channel
 
 Before you start digging, replace the staircase with ramps, double
 checking there is still access to the level. (should be fine when done
 in this order) The ramps can be built directly on a dug staircase.
 
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █>XX>█           █╖X÷÷▼╓█        █X██▲█         █  █
     █>XX>█           █╜X  X╙█        █X██X█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
+                                     Ramp
+
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █>XX>█           █╖X÷÷▼╓█        █X██▲█         █  █
     █>XX>█           █╜X  X╙█        █X██▲█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
+                                    Ramp
+
                       ██████
-    ██████           ██╘══╛██        ██████   
+    ██████           ██╘══╛██        ██████
     █>XX>█           █╖X÷÷▼╓█        █X██▲█         █  █
     █>XX>█           █╜X  ▼╙█        █X██▲█         █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
+
+                      Channel
 
 Now it should be safe to wall off the 1st quadrant. The other half
 will be the 3rd quadrant.
 
                       ██████
-    ██████           ██╘══╛██        ███████   
+    ██████           ██╘══╛██        ███████
     █>XX>█           █╖X÷÷▼╓█        █X██▲ █        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
+                                    Dig
+
                       ██████
-    ██████           ██╘══╛██        ███████   
+    ██████           ██╘══╛██        ███████
     █>XX>█           █╖X÷÷▼╓█        █X██▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███  ██   
+                                    Wall
+
+                      ██████           ████
+    ██████           ██╘══╛██        ███  ██
     █>XX>█           █╖X÷÷▼╓█        █X██▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███O ██   
+                                    Dig x2
+
+                      ██████           ████
+    ██████           ██╘══╛██        ███O ██
     █>XX>█           █╖X÷÷▼╓█        █X██▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███╘╛██   
+                                    Wall
+
+                      ██████           ████
+    ██████           ██╘══╛██        ███╘╛██
     █>XX>█           █╖X÷÷▼╓█        █X██▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███╘╛██   
+                                    Wall
+
+                      ██████           ████
+    ██████           ██╘══╛██        ███╘╛██
     █>XX>█           █╖X÷÷▼╓█        █X█ ▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███╔╛██   
+                                    Dig
+
+                      ██████           ████
+    ██████           ██╘══╛██        ███╔╛██
     █>XX>█           █╖X÷÷▼╓█        █X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
+                                    Wall
 The first quandrant is done. Flip the pump around and work on the 2nd
 quandrant. These staircases don't need to be ramped.
 
-                      ██████           ████ 
-    ██████           ██╘══╛██        ███╔╛██   
+                      ██████           ████
+    ██████           ██╘══╛██        ███╔╛██
     █>XX>█           █╖·÷÷▼╓█        █X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██        █  ╔╛██   
+            Pumping from the West
+            + Channel
+
+                      ██████         ██████
+    ██████           ██╘══╛██        █  ╔╛██
     █>XX>█           █╖·÷÷▼╓█        █X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██        █ ╘╦╛██   
+                                    Dig x2
+
+                      ██████         ██████
+    ██████           ██╘══╛██        █ ╘╦╛██
     █>XX>█           █╖·÷÷▼╓█        █X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██        █╘═╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██        █╘═╦╛██
     █>XX>█           █╖·÷÷▼╓█        █X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█        █X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘═╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘═╦╛██
     █>XX>█           █╖·÷÷▼╓█       █ X█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘═╦╛██   
+                                    Dig
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘═╦╛██
     █>XX>█           █╖·÷÷▼╓█       █OX█╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘═╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘═╦╛██
     █>XX>█           █╖·÷÷▼╓█       █OX ╜▲O█        █  █
     █>XX>█           █╜X  ▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Dig
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖·÷÷▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X  ▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
+
+                                    Wall
 
 Before we move on to the 3rd quadrant, deconstruct the pump and
 rebuild the stairs.
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X  ▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
+
+                    Stairs
 
 Do the 3rd quandrant. HOWEVER, leave the center tile untouched (DONT
 DIG IT!). It will serve as the last remaining aquifer sink because the
@@ -426,146 +552,189 @@ floor underneath has no aquifer tiles. Also, replace the ramp from the
 1st quandrant with a wall (IMPORTANT!). This will prevent the
 non-aquifer z level from flooding to > 1/7.
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ██████   
+    ██████           ██╒══╕██        ██████
                       ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+            Pumping from the West
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ███  █   
+    ██████           ██╒══╕██        ███  █
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Dig x2
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ███O █   
+    ██████           ██╒══╕██        ███O █
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲██        █  █
-    ██████           ██╒══╕██        ███╒╕█   
+    ██████           ██╒══╕██        ███╒╕█
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲O█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲ █        █  █
-    ██████           ██╒══╕██        ███╒╕██   
+    ██████           ██╒══╕██        ███╒╕██
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Dig
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX▼╓█       █OX╚╝▲╓█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        ███╒╕██   
+    ██████           ██╒══╕██        ███╒╕██
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╛██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╛██
     █>XX>█           █╖XXX·╓█       █OX╚╝>╓█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        ███╒╕██   
+    ██████           ██╒══╕██        ███╒╕██
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Deconstruct ramp
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXX+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜X÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        ███╒╕██   
+    ██████           ██╒══╕██        ███╒╕██
                       ██████           ████
+
+                                    Wall
 
 Reverse the pump, channel the input, and do the 4th quadrant. (Build a
 wall if this part seems to flood a bit)
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        ███╒╕██   
+    ██████           ██╒══╕██        ███╒╕██
                       ██████           ████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+            Pumping from the West
+            + Wall + Channel
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        █  ╒╕██   
+    ██████           ██╒══╕██        █  ╒╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Dig x2
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        █ ╒═╕██   
+    ██████           ██╒══╕██        █ ╒═╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       ██X██▲╙█        █  █
-    ██████           ██╒══╕██        █╒══╕██   
+    ██████           ██╒══╕██        █╒══╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █OX╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       █ X██▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+    ██████           ██╒══╕██       ██╒══╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Dig
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █╖X╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       █╜X██▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+    ██████           ██╒══╕██       ██╒══╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Wall
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █╖X╚╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       █╜X █▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+    ██████           ██╒══╕██       ██╒══╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                                    Dig
+
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █╖X╠╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       █╜X╙█▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+    ██████           ██╒══╕██       ██╒══╕██
                       ██████         ██████
+
+                                    Wall
 
 Now deconstruct the center tile of the 2nd quandrant and dig out the
 aquifer tile.
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
+                      ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
     █>XX>█           █╖XXO+╓█       █╖X ╩╩╗█        █  █
     █>XX>█           █╜·÷÷▼╙█       █╜X╙█▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+    ██████           ██╒══╕██       ██╒══╕██
                       ██████         ██████
 
-                      ██████         ██████  
-    ██████           ██╘══╛██       ██╘╦╦╗██   
-    █>XX>█           █╖XXO+╓█       █╖X ╩╩╗█        █  █
-    █>XX>█           █╜·÷÷▼╙█       █╜X╙ ▲╙█        █  █
-    ██████           ██╒══╕██       ██╒══╕██   
+                                    Deconstruct wall
+
                       ██████         ██████
+    ██████           ██╘══╛██       ██╘╦╦╗██
+    █>XX>█           █╖XXO+╓█       █╖X ╩╩╗█        █  █
+    █>XX>█           █╜·÷÷▼╙█       █╜X╙X▲╙█        █  █
+    ██████           ██╒══╕██       ██╒══╕██
+                      ██████         ██████
+
+                                    Dig stairs
 
 That's the last aquifer tile! Deconstruct inner walls and rebuild the
 staircases and dig on through!
 
-                      ██████         ██████  
+                      ██████         ██████
     ██████           ██╘══╛██       ██╘╦╦╗██        ████
     █>XX>█           █╖XXXX╓█       █╖XXXX╗█        █XX█         ██
     █>XX>█           █╜XXXX╙█       █╜XXXX╙█        █XX█         ██
     ██████           ██╒══╕██       ██╒══╕██        ████
                       ██████         ██████
 
+                                    Dig + Stairs    Stairs
+
 SUCCESS!!!
+
+WARNING: Don't dig out more than the 4x2 staircase on the non-aquifer
+layer. Dig down at least 1 more layer first. Otherwise, the aquifer
+will flood down.
