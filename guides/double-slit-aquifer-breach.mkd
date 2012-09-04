@@ -1,48 +1,49 @@
-Conquering the Aquifer
+# Conquering the Aquifer
+
 Step-by-step Guide to breach a multi-level aquifer
 
 http://dwarffortresswiki.org/index.php/Aquifer
 
-QuantumMenace's (fast) double-slit method:
-http://www.bay12forums.com/smf/index.php?topic=79224.15 (see spoiler)
+[QuantumMenace's (fast) double-slit method (see spoiler)](http://www.bay12forums.com/smf/index.php?topic=79224.15)
 
-Also illustrated here:
-http://dwarffortresswiki.org/index.php/DF2012:Double-slit_method
+Also illustrated [here](http://dwarffortresswiki.org/index.php/DF2012:Double-slit_method)
 
+Note: Use dfhack to find aquifer levels OR check revealed tiles
+carefully BEFORE the aquifer water gets to them (pause and do step
+time).
 
-multi-level aquifer
-for single layer aquifers, only do steps...
-
-Use dfhack to find aquifer levels OR check revealed tiles carefully
-BEFORE the aquifer water gets to them (pause and do step time).
-
-Legend
-█   revealed tile
-X   up/down staircase
->   down staircase
-+   floor
-    dug floor (blank tile)
-÷÷  screw pump
-·   open space
-O ╘ ═ ╛ ╘ ╦ ╗ ╖ ╓ ╖ ╩ ╗ ╜ ╙ ╜ ╙ ╙ ╒ ╕
-    various constructed wall tiles
-▼   down ramp (virtual ramp)
-▲   up ramp (actual ramp)
+Legend:
+* █   revealed tile
+* X   up/down staircase
+* >   down staircase
+* +   floor
+*     dug floor (blank tile)
+* ÷÷  screw pump
+* ·   open space
+* O ╘ ═ ╛ ╘ ╦ ╗ ╖ ╓ ╖ ╩ ╗ ╜ ╙ ╜ ╙ ╙ ╒ ╕
+*     various constructed wall tiles
+* ▼   down ramp (virtual ramp)
+* ▲   up ramp (actual ramp)
 
 
 Requirements:
-screw pump materials: 1 block, 1 enourmous corkscrew, 1 pipe section
-1 pump operator
-material for walls - wood/stone/metal
-1+ carpenter/mason/metalcrafter depending on wall material
-1 miner
+* screw pump materials: 1 block, 1 enourmous corkscrew, 1 pipe section
+* 1 pump operator
+* material for walls - wood/stone/metal
+* 1+ carpenter/mason/metalcrafter depending on wall material
+* 1 miner
 
 This will take at least a single season to complete.
 
+* [Aquifer Probing](#aquifer-probing)
+* [Multi-level Aquifer](#multi-level-aquifer)
+* [Last Aquifer Layer](#last-aquifer-layer)
 
-z0 (non-aquifer)    z-1 (aquifer)   z-2 (aquifer)   z-3 (non-aquifer)
+Columns:
 
-# Aquifer Probing
+     z0 (non-aquifer)    z-1 (aquifer)   z-2 (aquifer)   z-3 (non-aquifer)
+
+## Aquifer Probing
 
 Dig a 2x2 (or 4x2) up/stair staircase until the aquifer is hit
 
@@ -81,7 +82,7 @@ skip foward to steps for the Last Aquifer Layer.
 
 
 
-# Multi-level Aquifer
+## Multi-level Aquifer
 
 There are at least two aquifer levels below. The second aquifer level
 will act as a drain for the first level.
@@ -344,7 +345,7 @@ If the next two layers aquifers, repeat the above steps. Otherwise,
 continue onto the last steps dealing with the last aquifer layer.
 
 
-# Last Aquifer layer
+## Last Aquifer layer
 
 Rather than doing halves, the operations will be done in quadrants.
 These walls will have lots of cancellations.
