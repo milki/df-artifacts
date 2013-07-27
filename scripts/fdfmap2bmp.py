@@ -93,7 +93,7 @@ def read_tiles(start):
             #print "%d pixels with (%02X, %02X, %02X)" % (numberOfPixels, blue, green, red)
 
             for p in range(numberOfPixels):
-                tiles[i].insert(numPixels + p, (red, green, blue))
+                tiles[i].append((red, green, blue))
 
             numPixels += numberOfPixels
 
@@ -162,10 +162,10 @@ def read_zlevel_data(start):
                     tileImageIndex = unpack('I', cmap[read_pointer:read_pointer + varsize])[0]
                 read_pointer += varsize
 
+                #print "1 of tile %d" % tileImageIndex
                 tile = tiles[int(tileImageIndex)]
                 bitmap_layers[i].insert(numTiles, tile)
 
-                #print "1 of tile %d" % tileImageIndex
                 numTiles = numTiles + 1
         #print "Total tiles: %d" % numTiles
 
@@ -182,15 +182,15 @@ def export_bitmap_layers():
                 newTile = Image.new("RGB", [tileWidth, tileHeight], (255, 255, 255))
                 pix = newTile.load()
 
-                for w in range(tileWidth):
-                    for h in range(tileHeight):
-                        colors = tile[w + (w * h)]
-                        pix[w, h] = colors
+                for y in range(tileHeight):
+                    for x in range(tileWidth):
+                        colors = tile[x + (tileWidth * y)]
+                        pix[x, y] = colors
 
-                row = int(t % mapLayerWidthInTiles)
-                col = int(floor(t / mapLayerWidthInTiles))
+                row = int(t % mapLayerHeightInTiles)
+                col = t // mapLayerHeightInTiles
 
-                coord = (row * tileHeight, col * tileWidth, (row + 1) * tileHeight, (col + 1) * tileWidth)
+                coord = (col * tileWidth, row * tileHeight, (col + 1) * tileWidth, (row + 1) * tileHeight)
                 newLayer.paste(newTile, coord)
 
         print 'Writing to layer%d.bmp...' % l
