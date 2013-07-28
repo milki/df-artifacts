@@ -1,0 +1,43 @@
++---+---+---+---+
+|negativeVersion|
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+| numberOfTiles |    tileWidth     |    tileHeight     | numMapLayers  |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|   map layer descriptions ...                                         |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|   unique tiles ...                                                   |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|   map layer data ...                                                 |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+
+
+
+
+For each map layer
++---+---+---+---+---+----+----+----+----+----+----+----+
+| layer depth   |  width in tiles  | height in tiles   |
++---+---+---+---+---+----+----+----+----+----+----+----+
+
+
+
+For each unique tile
++---+---+---+---+---+---+---+
+| (tileID)  |   Pixels...   |
++---+---+---+---+---+---+---+
+
+Pixels repeated
+(until number of pixels add up to pixels per tile)
+(each field is 1 byte)
++---------------+------------------+---------------+------------------+
+|numberOfPixels |       blue       |     green     |       red        |
++---------------+------------------+---------------+------------------+
+
+
+
+For each map layer, tiles repeated (non RLE)
+(until number of tiles is total tiles per layer)
+(field size depends on # of unique tiles, 1/2/4 bytes)
++---------------+
+| tile index... |
++---------------+
+
