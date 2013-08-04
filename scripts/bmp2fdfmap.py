@@ -41,33 +41,36 @@ def process_files(layer_files):
         else:
             assert fort_name == name
 
-        layer = Image.open(filename)
-        layer_info.append((filename, int(layer_depth), layer))
+        layer_info.append((filename, int(layer_depth)))
 
     return fort_name, layer_info
 
 
-def process_layers(layers):
-    global args
-
-    tiled_layers = split_into_tiles(layers, args.tilewidth, args.tileheight)
-
-    uniquetiles, compressed_layer_data = compress_layers(tiled_layers)
-
-    return uniquetiles, compressed_layer_data
-
-
-def split_into_tiles(layers, tilewidth, tileheight):
-    tiled_layers = []
-    for layer_file, _, layer in layers:
+def split_and_compress_layers(layers, tilewidth, tileheight):
+    unique_tiles = []
+    compressed_layers = []
+    for l, (layer_file, depth) in enumerate(layers):
+        print "Splitting and compressing %s" % layer_file
         tiles = []
+
+        layer = Image.open(layer_file)
+        layerwidth, layerheight = layer.size
 
         for tile_buffer in crop(layer, tilewidth, tileheight):
             tile = Image.new('RGB', [tilewidth, tileheight], 255)
             tile.paste(tile_buffer)
-            tiles.append(tile)
-        tiled_layers.append(tiles)
-    return tiled_layers
+            tile_str = tile.tostring()
+
+            if tile_str not in unique_tiles:
+                unique_tiles.append(tile_str)
+            tiles.append(unique_tiles.index(tile_str))
+
+            del tile
+        del layer
+        compressed_layers.append((layerwidth, layerheight, depth, tiles))
+
+        print "Layer %d has %d unique tiles out of %d" % (l, len(set(compressed_layers[l][3])), len(compressed_layers[l][3]))
+    return unique_tiles, compressed_layers
 
 
 def crop(im, width, height):
@@ -78,81 +81,79 @@ def crop(im, width, height):
             yield im.crop(box)
 
 
-def compress_layers(tiled_layers):
-    unique_tiles = []
-    compressed_layer_data = []
-
-    for l, layer in enumerate(tiled_layers):
-        #print "map layer %d" % l
-        compressed_layer_data.insert(l, [])
-        for t, tile in enumerate(layer):
-            if tile.tostring() not in unique_tiles:
-                unique_tiles.append(tile.tostring())
-            compressed_layer_data[l].insert(t, unique_tiles.index(tile.tostring()))
-            #print "1 of tile %d" % unique_tiles.index(tile.tostring())
-
-        print "Layer %d has %d unique tiles out of %d" % (l, len(set(compressed_layer_data[l])), len(compressed_layer_data[l]))
-                
-    return unique_tiles, compressed_layer_data
-
-def write_compressed_file(unique_tiles, compressed_layer_data):
-    global args
+def write_compressed_file(fortname, unique_tiles, tilewidth, tileheight, compressed_layers):
 
     cstring = cStringIO.StringIO()
 
     # Headers
     print "=== MAP INFO ==="
-    print "%d unique tiles at %d x %d pixels" % (len(unique_tiles), args.tilewidth, args.tileheight)
+    print "%d unique tiles at %d x %d pixels" % (len(unique_tiles), tilewidth, tileheight)
     print "Features: negVer=%d, tileID=True, RLE=False" % -2
-    print "%d z-levels" % len(args.images)
+    print "%d z-levels" % len(compressed_layers)
 
     # TODO: Allow for other negativeVersions
-    cstring.write(pack('iiiii', -2, len(unique_tiles), args.tilewidth, args.tileheight, len(args.images)))
+    cstring.write(pack(
+        'iiiii',
+        -2,
+        len(unique_tiles),
+        tilewidth, tileheight,
+        len(compressed_layers)))
 
     # ZLEVELS
     print "=== ZLEVEL INFO ==="
-    for _, depth, layer in args.images:
-        layerwidth, layerheight = layer.size
-
-        layerwidthintiles = layerwidth//args.tilewidth
-        layerheightintiles = layerheight//args.tileheight
+    for width, height, depth, _ in compressed_layers:
+        layerwidthintiles = width//tilewidth
+        layerheightintiles = height//tileheight
         print "layer: depth=%d, width=%d, height=%d (%d pixels)" % (depth, layerwidthintiles, layerheightintiles, (layerwidthintiles * layerheightintiles))
 
-        cstring.write(pack('iii', depth, layerwidth//args.tilewidth, layerheight//args.tileheight))
+        cstring.write(pack(
+            'iii',
+            depth,
+            width//tilewidth,
+            height//tileheight))
 
     # TILES
     print "=== TILE INFO ==="
     for t, tile in enumerate(unique_tiles):
-        pix = Image.fromstring('RGB', [args.tilewidth, args.tileheight], tile).load()
+        pix = Image.fromstring('RGB', [tilewidth, tileheight], tile).load()
         lastpixel = None
         pixelCount = 0
         #print 'tile %d' % t
 
         cstring.write(pack('BBB', 0xFF, 0xFF, 0xFF))
 
-        for y in range(args.tileheight):
-            for x in range(args.tilewidth):
+        for y in range(tileheight):
+            for x in range(tilewidth):
                 if pix[x, y] == lastpixel:
                     pixelCount += 1
 
                     if pixelCount == 255:
                         red, green, blue = pix[x, y]
-                        cstring.write(pack('BBBB', pixelCount, blue, green, red))
+                        cstring.write(pack(
+                            'BBBB',
+                            pixelCount,
+                            blue, green, red))
                         #print "%d pixels with (%02X, %02X, %02X)" % (pixelCount, blue, green, red)
                         pixelCount = 0
                 else:
                     if lastpixel is not None:
                         red, green, blue = lastpixel
-                        cstring.write(pack('BBBB', pixelCount, blue, green, red))
+                        cstring.write(pack(
+                            'BBBB',
+                            pixelCount,
+                            blue, green, red))
                         #print "%d pixels with (%02X, %02X, %02X)" % (pixelCount, blue, green, red)
                     lastpixel = pix[x, y]
                     pixelCount = 1
 
         if pixelCount != 0:
             red, green, blue = lastpixel
-            cstring.write(pack('BBBB', pixelCount, blue, green, red))
+            cstring.write(pack(
+                'BBBB',
+                pixelCount,
+                blue, green, red))
             #print "%d pixels with (%02X, %02X, %02X)" % (pixelCount, blue, green, red)
-
+        del pix
 
 
     # ZLEVEL DATA
@@ -164,18 +165,24 @@ def write_compressed_file(unique_tiles, compressed_layer_data):
     else:
         indexfmt = 'I'
 
-    for l, layer in enumerate(compressed_layer_data):
-        print "Writing layer %d with %d tiles" % (l, len(layer))
-        for tileIndex in layer:
+    for l, layer in enumerate(compressed_layers):
+        print "Writing layer %d with %d tiles" % (l, len(layer[3]))
+        for tileIndex in layer[3]:
             cstring.write(pack(indexfmt, tileIndex))
 
-    filename = "%s.fdf-map" % args.fort
+    filename = "%s.fdf-map" % fortname
     with open(filename, 'wb') as cfile:
         cfile.write(zlib.compress(cstring.getvalue()))
         print 'Wrote %d bytes to filename %s' % (len(cstring.getvalue()), filename)
 
 if __name__ == '__main__':
     process_command()
-    unique_tiles, compressed_layer_data = process_layers(args.images)
-    write_compressed_file(unique_tiles, compressed_layer_data)
-    
+    unique_tiles, compressed_layers = \
+            split_and_compress_layers(
+                    args.images,
+                    args.tilewidth, args.tileheight)
+    write_compressed_file(
+            args.fort,
+            unique_tiles,
+            args.tilewidth, args.tileheight,
+            compressed_layers)
