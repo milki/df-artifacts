@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python
 #
 # Compress DF bitmap images to FDF-MAP
 #
