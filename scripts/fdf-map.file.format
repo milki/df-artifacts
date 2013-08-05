@@ -1,43 +1,216 @@
+1. General File Format
+
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|                                                                      |
++                                                                      +
+|                               Header                                 |
++                                                                      +
+|                                                                      |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|                                                                      |
++                                                                      +
+|                        Map Layer Descriptions                        |
++                                                                      +
+|                                                                      |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|                                                                      |
++                                                                      +
+|                             Unique Tiles                             |
++                                                                      +
+|                                                                      |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+|                                                                      |
++                                                                      +
+|                            Map Layer Data                            |
++                                                                      +
+|                                                                      |
++---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
+
+
+1.1 Header
+
 +---+---+---+---+
-|negativeVersion|
+|    Version    |
 +---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
-| numberOfTiles |    tileWidth     |    tileHeight     | numMapLayers  |
-+---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
-|   map layer descriptions ...                                         |
-+---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
-|   unique tiles ...                                                   |
-+---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
-|   map layer data ...                                                 |
+|   Num tiles   |    tileWidth     |    tileHeight     |   num layers  |
 +---+---+---+---+---+----+----+----+----+----+----+----+---+---+---+---+
 
+Version                     4-byte version and feature flags
+
+num tiles                   4-byte number of unique tiles
+
+tileWidth                   4-byte pixel width of a tile
+
+tileHeight                  4-byte pixel height of a tile
+
+num layers                  4-byte number of map layers
+
+Map Layer Descriptions      28-byte description of each map layer
+
+Unique Tiles                variable-length tile information
+
+Map Layer Data              variable-length layer data refering to tiles
 
 
+1.1.1 Version
 
-For each map layer
+For "version 0" maps, Version is a positive number.
+
+If Version is -1, there are no flags.
+
+Otherwise, feature flags are calculated as (-1 - Version):
+
++-------+-------+-------+-------+
+|  (reserved)   |  RLE  |  TID  |
++-------+-------+-------+-------+
+
+TID                 TileID. Additional font/color information included
+
+RLE                 RunLengthEncoding used in Map Layer Data
+
+
+A value of 1 indicates the feature is present.
+
+
+1.2 Map Layer Descriptions
+
 +---+---+---+---+---+----+----+----+----+----+----+----+
-| layer depth   |  width in tiles  | height in tiles   |
+|     Depth     |      Width       |       Height      |
 +---+---+---+---+---+----+----+----+----+----+----+----+
 
+Depth               4-byte z-level of layer
+
+Width               4-byte Width of layer in number of tiles
+
+Height              4-byte Height of layer in number of tiles
 
 
-For each unique tile
-+---+---+---+---+---+---+---+
-| (tileID)  |   Pixels...   |
-+---+---+---+---+---+---+---+
+In general, all map layers are the same width and height. z-levels are 0
+at the depth of the magma sea.
 
-Pixels repeated
-(until number of pixels add up to pixels per tile)
-(each field is 1 byte)
+The number of map layer descriptions is equal to the number of map layers
+as determined in the header.
+
+The order of layers does not matter, but must match the order of Map Layer Data.
+
+
+1.3 Unique Tiles
+
++---+---+---+---+---+---+---
+| (TileID)  |   Pixels      
++---+---+---+---+---+---+---
+
+TileID                          3-byte Tile ID (enabled via TID feature flag)
+
+Pixels                          RLE encoded color data
+
+
+The order in which the unique tiles appear determines its index value (starting with 0) and is refereced later by the Map Layer Data.
+
+
+1.3.1 TileID
+
+If the TID feature flag is enabled, TileID is present.
+
++-------+-------+-------+
+| code  |  bg   |  fg   |
++-------+-------+-------+
+
+code                            1-byte character code
+
+bg                              1-byte background color
+
+fg                              1-byte foreground color
+
+
+The character code corresponds to the 256 characters in the tileset (0 upper left, 255 bottom right).
+
+If code, bg, and fg are all 0xFF, then the tile does not match a known tile combination.
+
+When generated from bitmap images directly, this information may be difficult to extract. Current map viewers will generally ignore these values and rely solely on pixel data.
+
+
+1.3.2   Pixel
+
+RLE encoding of the RGB pixel values of a single unique tile.
+
 +---------------+------------------+---------------+------------------+
 |numberOfPixels |       blue       |     green     |       red        |
 +---------------+------------------+---------------+------------------+
 
+numberOfPixels                  1-byte number of pixels
+
+blue                            1-byte
+
+green                           1-byte
+
+red                             1-byte
 
 
-For each map layer, tiles repeated (non RLE)
-(until number of tiles is total tiles per layer)
-(field size depends on # of unique tiles, 1/2/4 bytes)
-+---------------+
-| tile index... |
-+---------------+
+numberOfPixels describes the number of pixels that have the following RGB
+value. As the value is 1-byte, should there be > 255 pixels with the same RGB value, more Pixel field are needed.
 
+Note, the order of the pixel values is BGR, rather than RGB.
+
+The total number of pixel fields corresponds to the total number of pixels in a single tile. This is (tileWidth * tileHeight) as determined in the header. The sum of numberOfPixels is equal to the number of pixels in a single tile.
+
+The pixels are described from top to bottom, left to right.
+
+
+1.4 Map Layer Data
+
+Map Layer Data is a sequence of tile indices. The order of layers does not matter, but must match the order of Map Layer Descriptions.
+
++---------------
+|  tileIndex    
++---------------
+
+tileIndex                       variable-length tile index
+
+
+The length and meaning of tileIndex is dependent on the RLE feature flag. The tile order is always top to bottom, left to right.
+
+The number of tiles corresponds to the layer width and height, as determined by the corresponding Map Layer Description.
+
+The number of map layer data fields corresponds to the total number of layers, as dtermiend in the Header.
+
+
+1.4.1   RLE Feature Flag enabled (format not yet verified)
+
+With RLE enabled, the map layer data are RLE encoded.
+
++---------------+-------+
+|  tileIndex    | (RLE) |
++---------------+-------+
+
+The bit-length of tileIndex is determined by the total number of unique tiles. The presence of the 1-byte RLE field is determined by a mask.
+
+0 <= Number of Tiles <= 127:
+    tileIndex       1-byte
+    mask            0x80
+127 < Number of Tiles <= 32767:
+    tileIndex       2-byte
+    mask            0x8000
+32767 < Number of Tiles:
+    tileIndex       4-byte
+    mask            0x80000000
+
+Flag becomes the value of tileIndex & mask.
+
+If Flag is 1:
+    tileIndex = tileIndex - Flag
+    RLE             1-byte number of tiles with this index
+Otherwise:
+    tileIndex = tileIndex
+
+
+1.4.2   RLE Feature Flag disabled
+
+The bit-length of tileIndex is determined by the total number of unique tiles. 
+
+0 <= Number of Tiles <= 255:
+    tileIndex       1-byte
+255 < Number of Tiles <= 65535:
+    tileIndex       2-byte
+65535 < Number of Tiles:
+    tileIndex       4-byte
