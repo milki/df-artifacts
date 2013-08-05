@@ -88,13 +88,13 @@ def write_compressed_file(fortname, unique_tiles, tilewidth, tileheight, compres
     # Headers
     print "=== MAP INFO ==="
     print "%d unique tiles at %d x %d pixels" % (len(unique_tiles), tilewidth, tileheight)
-    print "Features: negVer=%d, tileID=True, RLE=False" % -2
+    print "Features: negVer=%d, tileID=1, RLE=1" % -4
     print "%d z-levels" % len(compressed_layers)
 
     # TODO: Allow for other negativeVersions
     cstring.write(pack(
         'iiiii',
-        -2,
+        -4,
         len(unique_tiles),
         tilewidth, tileheight,
         len(compressed_layers)))
@@ -158,17 +158,51 @@ def write_compressed_file(fortname, unique_tiles, tilewidth, tileheight, compres
 
     # ZLEVEL DATA
     print "=== ZLEVEL DATA ==="
-    if len(unique_tiles) <= 255:
+    if len(unique_tiles) <= 127:
         indexfmt = 'B'
-    elif len(unique_tiles) <= 65535:
+        flag = 0x80
+    elif len(unique_tiles) <= 32767:
         indexfmt = 'H'
+        flag = 0x8000
     else:
         indexfmt = 'I'
+        flag = 0x80000000
 
     for l, layer in enumerate(compressed_layers):
         print "Writing layer %d with %d tiles" % (l, len(layer[3]))
+
+        tileCount = 0
+        lastTileIndex = None
         for tileIndex in layer[3]:
-            cstring.write(pack(indexfmt, tileIndex))
+            if tileIndex == lastTileIndex:
+                tileCount += 1
+                if tileCount == 127:
+                    tileImageIndex = tileIndex | flag
+                    #print '%d of tile %d' % (tileCount, tileIndex)
+                    cstring.write(pack(indexfmt, tileImageIndex))
+                    cstring.write(pack('B', tileCount))
+                    tileCount = 0
+            else:
+                if lastTileIndex is not None:
+                    if tileCount == 1:
+                        #print '1 of tile %d' % lastTileIndex
+                        cstring.write(pack(indexfmt, lastTileIndex))
+                    else:
+                        tileImageIndex = lastTileIndex | flag
+                        #print '%d of tile %d' % (tileCount, lastTileIndex)
+                        cstring.write(pack(indexfmt, tileImageIndex))
+                        cstring.write(pack('B', tileCount))
+                lastTileIndex = tileIndex
+                tileCount = 1
+
+        if tileCount == 1:
+            #print '1 of tile %d' % lastTileIndex
+            cstring.write(pack(indexfmt, lastTileIndex))
+        elif tileCount > 1:
+            tileImageIndex = lastTileIndex | flag
+            #print '%d of tile %d' % (tileCount, lastTileIndex)
+            cstring.write(pack(indexfmt, tileImageIndex))
+            cstring.write(pack('B', tileCount))
 
     filename = "%s.fdf-map" % fortname
     with open(filename, 'wb') as cfile:

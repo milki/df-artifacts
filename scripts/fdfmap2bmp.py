@@ -73,6 +73,8 @@ TILE_ID_SIZE = 3
 PIXEL_SIZE = 4
 
 def read_tiles(start):
+    global tiles
+
     read_pointer = start
     TILE_PIXEL_SIZE = tileWidth * tileHeight
 
@@ -84,7 +86,7 @@ def read_tiles(start):
 
             #print "tile %d: code=%02X, bg=%02X, fg=%02X" % (i, characterCode, backgroundColor, foregroundColor)
 
-        tiles.insert(i, [])
+        tiles.append([])
         numPixels = 0
         while numPixels < TILE_PIXEL_SIZE:
             numberOfPixels, blue, green, red = unpack('BBBB', cmap[read_pointer:read_pointer + PIXEL_SIZE])
@@ -126,7 +128,7 @@ def read_zlevel_data(start):
 
         #print 'Map layer %d' % i
 
-        bitmap_layers.insert(i, [])
+        bitmap_layers.append([])
         while numTiles < mapLayerWidthInTiles * mapLayerHeightInTiles:
 
             # TODO: Find a file with RLE to test the output on
@@ -143,16 +145,25 @@ def read_zlevel_data(start):
                 read_pointer += varsize
 
                 if flag:
-                    tileImageIndex = tileIndexAndFlag - flag
-                    rleTiles = unpack('B', cmap[read_pointer:read_pointer + 1])
+                    tileImageIndex = tileIndexAndFlag ^ flag
+                    rleTiles, = unpack('B', cmap[read_pointer:read_pointer + 1])
                     read_pointer += 1
 
                     #print "%d of tile %d" % (rleTiles, tileImageIndex)
-                    numTiles = numTiles + rleTiles
+
+                    tile = tiles[int(tileImageIndex)]
+                    for _ in range(rleTiles):
+                        bitmap_layers[i].append(tile)
+
+                    numTiles += rleTiles
                 else:
-                    tileImageIndex = tileImageAndFlag
+                    tileImageIndex = tileIndexAndFlag
                     #print "1 of tile %d" % tileImageIndex
-                    numTiles = numTiles + 1
+
+                    tile = tiles[int(tileImageIndex)]
+                    bitmap_layers[i].append(tile)
+
+                    numTiles += 1
             else:
                 if varsize == 1:
                     tileImageIndex = unpack('B', cmap[read_pointer:read_pointer + varsize])[0]
@@ -164,7 +175,7 @@ def read_zlevel_data(start):
 
                 #print "1 of tile %d" % tileImageIndex
                 tile = tiles[int(tileImageIndex)]
-                bitmap_layers[i].insert(numTiles, tile)
+                bitmap_layers[i].append(tile)
 
                 numTiles = numTiles + 1
         #print "Total tiles: %d" % numTiles
