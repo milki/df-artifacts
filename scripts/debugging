@@ -1,0 +1,37 @@
+http://milki.ircmylife.com/~milki/lifelabored/index.html
+
+var rawmap = null;
+var xhr= new XMLHttpRequest();
+xhr.open('GET', 'Lifelabored.fdf-map', true);
+xhr.responseType = "arraybuffer";
+xhr.onload = function(oEvent) { var response = new Uint8Array(xhr.response); var inflate = new Zlib.Inflate(response); rawmap = inflate.decompress(); };
+xhr.send(null);
+
+
+file = jDataView(rawmap, littleEndian=false);
+fdf = new FDFMap(file);
+
+read_pointer = fdf.read_metadata(0);
+read_pointer = fdf.read_zlevels(read_pointer);
+read_pointer = fdf.read_tiles(read_pointer);
+read_pointer = fdf.read_zlevel_data(read_pointer);
+
+
+
+depth=127, width=240, height=96
+3840 height
+1536 width
+
+10458 Jul 26 17:11 Lifelabored.fdf-map
+236776 Nov 14 16:17 dfma_map.decompressed
+
+MD5 (Lifelabored.fdf-map) = d1bef3c052ab2fd47f6e0f5f5b16c262
+MD5 (dfma_map.decompressed) = 205be64cdca634a8351cc4e742eb6a40
+
+36 unique tiles at 16 x 16 pixels
+Features: negVer=-2, tileID=1, RLE=0
+10 z-levels
+
+
+https://github.com/imaya/zlib.js/blob/master/README.en.md
+https://github.com/jDataView/jDataView
