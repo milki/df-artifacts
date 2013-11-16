@@ -30,7 +30,7 @@ function initialize() {
                     return null;
                 }
 
-                tile = fdf.tileAt(2, x, y);
+                tile = fdf.tileAt(this.level, x, y);
                 if(tile == -1) {
                     return null;
                 }
@@ -40,32 +40,68 @@ function initialize() {
             tileSize: new google.maps.Size(fdf.tileHeight, fdf.tileWidth),
             minZoom: 8,
             maxZoom: 8,
-            name: 'Dwarf Fortress ZLevel'
         };
 
 
-        var ZLevelMapType = new google.maps.ImageMapType(ZLevelTypeOptions);
+        var ZLevelTypes = [];
+        var ZLevelTypeIds = [];
+        for(var lvl = 0; lvl < fdf.numMapLayers; lvl++) {
+            var ZLevelTypeOptions = {
+                getTileUrl: function(coord, zoom) {
+                    var tileNum = 1 << zoom;
+
+                    var y = coord.y
+                    var x = coord.x
+
+                    if (x < 0 || x >= tileNum) {
+                        return null;
+                    }
+
+                    if (y < 0 || y >= tileNum) {
+                        return null;
+                    }
+
+                    tile = fdf.tileAt(this.level, x, y);
+                    if(tile == -1) {
+                        return null;
+                    }
+
+                    return "tiles/tile" + tile + ".png";
+                },
+                tileSize: new google.maps.Size(fdf.tileHeight, fdf.tileWidth),
+                minZoom: 8,
+                maxZoom: 8,
+            };
+
+            ZLevelTypeOptions.name = 'level' + lvl;
+            ZLevelTypeOptions.level = lvl;
+            ZLevelTypes[lvl] = new google.maps.ImageMapType(ZLevelTypeOptions);
+            ZLevelTypeIds[lvl] = 'level' + lvl;
+        }
 
         var mapOptions = {
           center: new google.maps.LatLng(85, -180),
           zoom: 8,
-          mapTypeId: 'df',
+          mapTypeId: 'level2',
           mapTypeControlOptions: {
-              mapTypeIds: ['df']
+              mapTypeIds: ZLevelTypeIds,
+              style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
           },
-
           panControl:           false,
           scaleControl:         false,
-          mapTypeControl:       false,
+          mapTypeControl:       true,
           streetViewControl:    false,
           overviewMapControl:   false,
           zoomControl:          false,
         };
+
         var map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
 
-        map.mapTypes.set('df', ZLevelMapType);
-        map.setMapTypeId('df');
+        for(var i = 0; i < ZLevelTypeIds.length; i++) {
+            map.mapTypes.set(ZLevelTypeIds[i], ZLevelTypes[i]);
+        }
+        map.setMapTypeId('level2');
     };
     xhr.send(null);
 
