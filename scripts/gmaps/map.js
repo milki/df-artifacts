@@ -24,11 +24,11 @@ function initialize() {
                 var y = coord.y
                 var x = coord.x
 
-                if (x < 0 || x >= tileNum) {
+                if (x < 0 || x >= this.mapLayerWidthInTiles = 0) {
                     return null;
                 }
 
-                if (y < 0 || y >= tileNum) {
+                if (y < 0 || y >= this.mapLayerHeightInTiles = 0) {
                     return null;
                 }
 
