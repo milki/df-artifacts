@@ -1,3 +1,5 @@
+var map = null;
+
 function initialize() {
     var fdf = null;
     var xhr= new XMLHttpRequest();
@@ -95,7 +97,7 @@ function initialize() {
           zoomControl:          false,
         };
 
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
+        map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
 
         for(var i = 0; i < ZLevelTypeIds.length; i++) {
