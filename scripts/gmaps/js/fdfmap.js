@@ -33,6 +33,7 @@ function FDFMap(map) {
 
     this.packed = map;  // jDataViewer object
     this.coordTileMap = [];
+    this.tiles = [];
 
     this.negativeVersion = 0;
     this.numberOfTiles = 0;
@@ -63,6 +64,8 @@ tileAt: function (zlevel, x, y) {
 
     return -1;
 },
+
+getTile: function(tileId) { return this.tiles[tileId]; },
 
 read_metadata: function (start) {
 
@@ -116,14 +119,20 @@ read_tiles: function(start) {
 
         var numPixels = 0;
         var pixel_size = this.tileWidth * this.tileHeight;
+
+        var tile = [];
         while(numPixels < pixel_size) {
+
+            // (num, blue, green, red)
             var pixel_rle = unpack('BBBB', this.packed, read_pointer);
             read_pointer += 4;
 
-            // (red, green, blue)
-
+            for(var p = 0; p < pixel_rle[0]; p++) {
+                tile[numPixels + p] = [pixel_rle[1], pixel_rle[2], pixel_rle[3]];
+            }
             numPixels += pixel_rle[0];
         }
+        this.tiles[i] = tile;
     }
 
     return read_pointer;
