@@ -7,13 +7,67 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas { height: 100% }
     </style>
+    <script type="text/javascript" src="js/pagesetup.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <script type="text/javascript" src="jdataview.js"></script>
-    <script type="text/javascript" src="zlib.min.js"></script>
-    <script type="text/javascript" src='fdfmap.js'></script>
-    <script type="text/javascript" src='map.js'></script>
   </head>
   <body>
     <div id="map-canvas"/>
+    <script type="text/javascript">
+      var fdf = null;
+      var map = null;
+
+      PAGESETUP.files.push('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js');
+      PAGESETUP.files.push('js/globals.js');
+      PAGESETUP.files.push('js/jdataview.js');
+      PAGESETUP.files.push('js/zlib.min.js');
+      PAGESETUP.files.push('js/fdfmap.js');
+      PAGESETUP.files.push('js/map.js');
+
+      PAGESETUP.addControl(function() {
+        var xhr= new XMLHttpRequest();
+
+        var mapfile = $.getParam('map');
+
+        if (mapfile == null) {
+          alert('No map defined!');
+          return;
+        }
+
+        var lat = $.getParam('lat');
+        var lng = $.getParam('lng');
+
+        if (lat == null) { lat = 85; };
+        if (lng == null) { lng = -180; };
+
+        xhr.open('GET', mapfile + '.fdfmap', true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = function(oEvent) {
+          var response = new Uint8Array(xhr.response);
+          var inflate = new Zlib.Inflate(response);
+          var rawmap = inflate.decompress();
+          var file = jDataView(rawmap, littleEndian=false);
+          fdf = new FDFMap(file);
+          fdf.process();
+
+          response = null;
+          inflate = null;
+          rawmap = null;
+          file = null;
+          delete response;
+          delete inflate;
+          delete rawpmap;
+          delete file;
+
+          var level = $.getParam('level');
+          if (level == null) {
+            level = 0;
+          }
+
+          initialize(mapfile, fdf, level, lat, lng);
+        };
+        xhr.send(null);
+      }, 'high');
+    </script>
+    <script src="js/dispatcher.js"></script>
   </body>
 </html>

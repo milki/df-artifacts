@@ -218,6 +218,13 @@ read_zlevel_data: function(start) {
 
     return read_pointer;
 },
+
+process: function() {
+    var read_pointer = this.read_metadata(0);                                                                                                                
+    read_pointer = this.read_zlevels(read_pointer);                                                                                                          
+    read_pointer = this.read_tiles(read_pointer);                                                                                                            
+    this.read_zlevel_data(read_pointer);                                                                                                                     
+},
 };
 
 if (typeof module !== 'undefined' && typeof module.exports === 'object') {
