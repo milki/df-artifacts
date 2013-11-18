@@ -54,14 +54,9 @@ tileAt: function (zlevel, x, y) {
 
     layer = this.coordTileMap[zlevel];
 
-    var num = 0;
-    for(var i = 0; i < layer.length; i++) {
-        if(tileNum < num + layer[i][0]) {
-            return layer[i][1];
-        }
-        num += layer[i][0];
+    if (tileNum < layer.length) {
+        return layer[tileNum];
     }
-
     return -1;
 },
 
@@ -120,7 +115,8 @@ read_tiles: function(start) {
         var numPixels = 0;
         var pixel_size = this.tileWidth * this.tileHeight;
 
-        var tile = [];
+        // read top bottom left right
+        var tile = new Uint32Array(pixel_size);
         while(numPixels < pixel_size) {
 
             // (num, blue, green, red)
@@ -128,7 +124,11 @@ read_tiles: function(start) {
             read_pointer += 4;
 
             for(var p = 0; p < pixel_rle[0]; p++) {
-                tile[numPixels + p] = [pixel_rle[1], pixel_rle[2], pixel_rle[3]];
+                tile[numPixels + p] =
+                    (255  << 24) |    // alpha
+                    (pixel_rle[1] << 16) |  // blue
+                    (pixel_rle[2] << 8)  |  // green
+                     pixel_rle[3];          // red
             }
             numPixels += pixel_rle[0];
         }
@@ -160,9 +160,17 @@ read_zlevel_data: function(start) {
         }
     }
 
+    var totalTiles = this.mapLayerWidthInTiles * this.mapLayerHeightInTiles;
     for(var layer = 0; layer < this.numMapLayers; layer++) {
 
-        var zlevel = [];
+        var zlevel;
+        if (this.numberOfTiles <= 256) {
+            zlevel = new Uint8Array(totalTiles);
+        } else if(this.numberOfTiles <= 65536) {
+            zlevel = new Uint16Array(totalTiles);
+        } else {
+            zlevel = new Uint32Array(totalTiles);
+        }
 
         var numTiles = 0;
 
@@ -170,7 +178,7 @@ read_zlevel_data: function(start) {
         var tileImageIndex;
         var flag = false;
         var rleTiles = 0;
-        while(numTiles < this.mapLayerWidthInTiles * this.mapLayerHeightInTiles) {
+        while(numTiles < totalTiles) {
             if(this.RLE) {
                 switch(varsize) {
                     case 1:
@@ -193,14 +201,17 @@ read_zlevel_data: function(start) {
                     rleTiles = unpack('B', this.packed, read_pointer)[0];
                     read_pointer += 1;
 
-                    numTiles += rleTiles;
 
-                    zlevel[zlevel.length] = [rleTiles, tileImageIndex]
+                    for (var r = 0; r < rleTiles; r++) {
+                        zlevel[numTiles + r] = tileImageIndex;
+                    }
+                    numTiles += rleTiles;
                 } else {
                     tileImageIndex = tileImageAndFlag;
                     numTiles += 1;
 
-                    zlevel[zlevel.length] = [1, tileImageIndex]
+                    zlevel[numTiles] = tileImageIndex;
+
                 }
             } else {
                 switch(varsize) {
@@ -215,10 +226,10 @@ read_zlevel_data: function(start) {
                         break;
                 }
                 read_pointer += varsize;
-
                 numTiles += 1;
 
-                zlevel[zlevel.length] = [1, tileImageIndex]
+                zlevel[numTiles] = tileImageIndex;
+
             }
         }
 

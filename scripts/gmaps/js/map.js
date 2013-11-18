@@ -45,23 +45,10 @@ ZLevelMapType.prototype = {
         var ctx = tile.getContext('2d');
         var imageData = ctx.getImageData(0, 0, tileWidth, tileHeight);
 
-        var buf = new ArrayBuffer(imageData.data.length);
-        var buf8 = new Uint8ClampedArray(buf);
-        var data = new Uint32Array(buf);
-
         var tileImageData = tileCache[tileId];
         if (tileImageData == null) {
             var tileData = fdf.getTile(tileId);
-
-            // read top bottom left right
-            // write top bottom left right
-            for(var p = 0; p < tileData.length; p++) {
-                data[p] =
-                  (255  << 24) |    // alpha
-                  (tileData[p][0] << 16) |    // blue
-                  (tileData[p][1] <<  8) |    // green
-                   tileData[p][2];            // red
-            }
+            var buf8 = new Uint8ClampedArray(tileData.buffer);
             imageData.data.set(buf8);
 
             tileCache[tileId] = tileImageData = imageData;
@@ -69,7 +56,7 @@ ZLevelMapType.prototype = {
         ctx.putImageData(tileImageData, 0, 0);
         return tile;
     },
-    releaseTile: function(tile) {},
+    releaseTile: function(tile) { tile.remove(); },
 
 };
 
