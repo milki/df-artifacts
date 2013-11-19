@@ -208,10 +208,9 @@ read_zlevel_data: function(start) {
                     numTiles += rleTiles;
                 } else {
                     tileImageIndex = tileImageAndFlag;
-                    numTiles += 1;
 
                     zlevel[numTiles] = tileImageIndex;
-
+                    numTiles += 1;
                 }
             } else {
                 switch(varsize) {
@@ -226,10 +225,9 @@ read_zlevel_data: function(start) {
                         break;
                 }
                 read_pointer += varsize;
-                numTiles += 1;
 
                 zlevel[numTiles] = tileImageIndex;
-
+                numTiles += 1;
             }
         }
 
