@@ -27,7 +27,7 @@ function initialize(mapname, fdf, start_level, startx, starty) {
           return tiler.show(x, y, fetched.get(x, y));
         }
 
-        var tileId = fdf.tileAt(2, x, y);
+        var tileId = fdf.tileAt(start_level, x, y);
 
         if (tileId == -1) {
           var img = new Image();
