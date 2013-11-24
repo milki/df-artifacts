@@ -14,12 +14,10 @@ function initialize(mapname, fdf, start_level, startx, starty) {
         var y = tile[1];
 
         if (x < 0 || x >= fdf.mapLayerWidthInTiles) {
-          var img = new Image();
           return;
         }
 
         if (y < 0 || y >= fdf.mapLayerHeightInTiles) {
-          var img = new Image();
           return;
         }
 
@@ -30,7 +28,6 @@ function initialize(mapname, fdf, start_level, startx, starty) {
         var tileId = fdf.tileAt(start_level, x, y);
 
         if (tileId == -1) {
-          var img = new Image();
           return;
         }
 
