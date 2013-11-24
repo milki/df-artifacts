@@ -4,6 +4,7 @@ function initialize(mapname, fdf, start_level, startx, starty) {
   fetched = new Grid();
   tiler = new Tiler(document.getElementById('map-canvas'), {
     tileSize: 16,
+    margin: 25,
     x: startx,
     y: starty,
 
