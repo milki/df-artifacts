@@ -39,22 +39,25 @@ ZLevelMapType.prototype = {
             return div;
         }
 
-        var tile = ownerDocument.createElement('canvas');
-        var tileWidth = tile.width = this.tileSize.width;
-        var tileHeight = tile.height = this.tileSize.height;
-        var ctx = tile.getContext('2d');
-        var imageData = ctx.getImageData(0, 0, tileWidth, tileHeight);
-
+        var img = ownerDocument.createElement('img');
         var tileImageData = tileCache[tileId];
         if (tileImageData == null) {
             var tileData = fdf.getTile(tileId);
+
+            var tile = ownerDocument.createElement('canvas');
+            var tileWidth = tile.width = this.tileSize.width;
+            var tileHeight = tile.height = this.tileSize.height;
+            var ctx = tile.getContext('2d');
+            var imageData = ctx.getImageData(0, 0, tileWidth, tileHeight);
             var buf8 = new Uint8ClampedArray(tileData.buffer);
             imageData.data.set(buf8);
 
-            tileCache[tileId] = tileImageData = imageData;
+            ctx.putImageData(imageData, 0, 0);
+
+            tileCache[tileId] = tileImageData = tile.toDataURL();
         }
-        ctx.putImageData(tileImageData, 0, 0);
-        return tile;
+        img.src = tileImageData;
+        return img;
     },
     releaseTile: function(tile) { tile.remove(); },
 
